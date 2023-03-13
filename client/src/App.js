@@ -1,52 +1,55 @@
-import React from "react";
-import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
-import PostsListPage from "./pages/PostsListPage";
-import PostFormPage from "./pages/PostFormPage";
-import ShowPostPage from "./pages/ShowPostPage";
-import AboutUsPage from "./pages/AboutUsPage";
+import React, {useEffect} from "react"
+import { Routes, Route } from "react-router-dom"
+import "./App.css"
 
-import "./App.css";
+import Header from "./components/Header"
+import HomePage from "./pages/HomePage"
+import AboutPage from "./pages/AboutPage"
+import PricingPage from "./pages/PricingPage"
+import TeamPage from "./pages/TeamPage"
+import SignUpPage from "./pages/SignUpPage"
+import LoginPage from "./pages/LoginPage"
+import Footer from "./pages/Footer"
+import ProgramsModal from "./components/modals/Programs"
+import Students from "./pages/StudentsPage"
+import Teachers from "./pages/TeachersPage"
+import Leaders from "./pages/LeadersPage"
+import Events from "./pages/Mission"
 
-function Navigation(props) {
+
+const RedirectPage = () => {
+  useEffect(() => {
+      if (localStorage.getItem("userId")) {
+          window.location.href = "/"
+      }
+  },[])
+
   return (
-    <nav className="navbar navbar-expand-sm navbar-dark bg-dark shadow mb-3">
-      <div className="container-fluid">
-        <Link className="navbar-brand" to="/">
-          Micro Blog
-        </Link>
-        <ul className="navbar-nav me-auto">
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/posts/new">
-              Create a Micro Post
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/about-us">
-              About Us
-            </NavLink>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  );
+      <></>
+  )
 }
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Navigation />
-      <div className="container-xl text-center">
-        <div className="row justify-content-center">
-          <Routes>
-            <Route path="/posts/new" element={<PostFormPage />} />
-            <Route path="/posts/:id" element={<ShowPostPage />} />
-            <Route path="/about-us" element={<AboutUsPage />} />
-            <Route path="/" element={<PostsListPage />} />
-          </Routes>
-        </div>
-      </div>
-    </BrowserRouter>
-  );
+const App = () => {
+	return (
+		<div className="App">
+			<Header />
+			<Routes>
+				<Route path="/" element={<HomePage />} />
+				<Route path="/about-us" element={<AboutPage />} />
+				<Route path="/pricing" element={<PricingPage />} />
+				<Route path="/team" element={<TeamPage />} />
+				<Route path="/sign-up" element={<SignUpPage />} />
+				<Route path="/login" element={<LoginPage />} />
+				<Route path="/students" element={<Students/>}/>
+				<Route path="/teachers" element={<Teachers/>}/>
+				<Route path="/leaders" element={<Leaders/>}/>
+				<Route path="/events" element={<Events/>}/>
+				<Route path="*" element={<RedirectPage />} />
+			</Routes>
+			<Footer />
+			<ProgramsModal/>
+		</div>
+	)
 }
 
-export default App;
+export default App
